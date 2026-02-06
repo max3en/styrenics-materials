@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { prisma } from "@/lib/prisma";
 import { ProductTable } from "@/components/products/product-table";
 import { requireAuth } from "@/lib/auth-helpers";
