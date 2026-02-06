@@ -1,0 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─── AUTH ────────────────────────────────────────────────────
+
+enum Role {
+  ADMIN
+  EDITOR
+  VIEWER
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String
+  image         String?
+  role          Role      @default(VIEWER)
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+// ─── DOMAIN ─────────────────────────────────────────────────
+
+model Category {
+  id        String     @id @default(cuid())
+  name      String     @unique
+  slug      String     @unique
+  brands    Brand[]
+  documents Document[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Brand {
+  id         String    @id @default(cuid())
+  name       String
+  slug       String    @unique
+  categoryId String
+  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  products   Product[]
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
+
+model Product {
+  id     String @id @default(cuid())
+  name   String
+  slug   String @unique
+  type   String?
+
+  brandId String
+  brand   Brand  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  // Thermal — separate columns per measurement condition
+  vicatSofteningTemp Float? // Vicat B 50N - 50°C/h (ABS)
+  vicatTemp          Float? // Vicat (SAN, GPPS-HIPS)
+  vicatATemp         Float? // Vicat A 50N - 50°C/h (PS-PE)
+  vicatB120Temp      Float? // Vicat B 50N - 120°C/h (PC-ABS)
+
+  // Melt Flow Index — separate columns per test condition
+  mfi220_10 Float? // MFI 220°C / 10kg (ABS, SAN)
+  mfi200_5  Float? // MFI 200°C / 5kg (GPPS-HIPS, PS-PE)
+  mfi260_5  Float? // MFI 260°C / 5kg (PC-ABS)
+
+  // Impact strength
+  izodImpact   Float? // Izod notched 23°C (kJ/m²)
+  charpyImpact Float? // Charpy notched 23°C (kJ/m²)
+
+  // EPS-specific
+  particleSizeRange String? // e.g. "0.9 - 1.6"
+  blowingAgent      String? // e.g. "standard"
+  densityRange      String? // e.g. "12 - 25"
+
+  mainApplications String? @db.Text
+
+  documents Document[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  @@index([brandId])
+}
+
+enum DocumentType {
+  TDS
+  SDS
+  REGULATORY
+}
+
+model Document {
+  id       String       @id @default(cuid())
+  name     String
+  fileName String
+  blobUrl  String
+  fileSize Int
+  mimeType String
+  docType  DocumentType
+
+  productId  String?
+  product    Product?  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+
+  uploadedBy String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([productId])
+  @@index([categoryId])
+  @@index([docType])
+}
