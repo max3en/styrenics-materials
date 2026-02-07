@@ -30,23 +30,34 @@ export async function POST(request: NextRequest) {
     );
   }
 
-  const blob = await put(`documents/${Date.now()}-${file.name}`, file, {
-    access: "public",
-  });
+  try {
+    if (!process.env.BLOB_READ_WRITE_TOKEN) {
+      console.error("BLOB_READ_WRITE_TOKEN is not configured");
+      return NextResponse.json({ error: "Storage not configured. Please check BLOB_READ_WRITE_TOKEN." }, { status: 500 });
+    }
 
-  const document = await prisma.document.create({
-    data: {
-      name: file.name.replace(/\.[^.]+$/, ""),
-      fileName: file.name,
-      blobUrl: blob.url,
-      fileSize: file.size,
-      mimeType: file.type || "application/octet-stream",
-      docType: docType as any,
-      productId: productId || null,
-      categoryId: categoryId || null,
-      uploadedBy: session.user.id,
-    },
-  });
+    const blob = await put(`documents/${Date.now()}-${file.name}`, file, {
+      access: "public",
+    });
 
-  return NextResponse.json(document, { status: 201 });
+    const document = await prisma.document.create({
+      data: {
+        name: file.name.replace(/\.[^.]+$/, ""),
+        fileName: file.name,
+        blobUrl: blob.url,
+        fileSize: file.size,
+        mimeType: file.type || "application/octet-stream",
+        docType: docType as any,
+        productId: productId || null,
+        categoryId: categoryId || null,
+        uploadedBy: session.user.id,
+      },
+    });
+
+    return NextResponse.json(document, { status: 201 });
+  } catch (error: any) {
+    console.error("Upload error:", error);
+    return NextResponse.json({ error: error.message || "Upload failed" }, { status: 500 });
+  }
 }
+
