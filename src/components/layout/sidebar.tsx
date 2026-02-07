@@ -113,7 +113,16 @@ export function Sidebar() {
             Get Support &rarr;
           </Link>
         </div>
+        <div className="mt-6 px-2 text-center">
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-muted-foreground/40">
+            Built by <span className="text-muted-foreground/60">Marc Ross</span>
+          </p>
+          <p className="text-[9px] font-medium text-muted-foreground/30 mt-1 uppercase tracking-widest">
+            Sales Styrenics
+          </p>
+        </div>
       </div>
     </div>
   );
 }
+

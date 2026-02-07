@@ -61,7 +61,14 @@ export default async function DashboardPage() {
         <p className="text-muted-foreground text-lg">
           Overview of the Versalis Styrenics material database
         </p>
+        <div className="flex items-center gap-2 mt-1">
+          <span className="h-px w-8 bg-primary/20" />
+          <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary/40">
+            Engineered by <span className="text-primary/60">Marc Ross</span> <span className="text-[10px] opacity-40 ml-1">(Sales Styrenics)</span>
+          </p>
+        </div>
       </div>
+
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
