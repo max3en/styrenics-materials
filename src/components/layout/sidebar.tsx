@@ -12,15 +12,18 @@ import {
   Shield,
   Users,
   Box,
+  GraduationCap,
 } from "lucide-react";
 
 const navigation = [
   { name: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { name: "Products", href: "/products", icon: Package },
   { name: "Categories", href: "/categories", icon: Layers },
+  { name: "Learning Center", href: "/learning", icon: GraduationCap },
   { name: "Regulatory Hub", href: "/regulatory", icon: Shield },
   { name: "Documents", href: "/documents", icon: FileText },
 ];
+
 
 const adminNavigation = [
   { name: "User Management", href: "/admin/users", icon: Users },
