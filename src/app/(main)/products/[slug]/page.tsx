@@ -13,8 +13,10 @@ import { formatFloat } from "@/lib/utils";
 import { ArrowLeft, Edit, FileText, Download, Box, Layers, ShieldCheck, ChevronRight } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { cn } from "@/lib/utils";
+import { DocumentUpload } from "@/components/documents/document-upload";
 
 export default async function ProductDetailPage({
+
   params,
 }: {
   params: Promise<{ slug: string }>;
@@ -191,8 +193,15 @@ export default async function ProductDetailPage({
               )}
             </CardContent>
           </Card>
+
+          {canEdit && (
+            <div className="pt-4 border-t border-white/5">
+              <DocumentUpload productId={product.id} />
+            </div>
+          )}
         </div>
       </div>
     </div>
   );
 }
+
