@@ -55,28 +55,47 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
-  const session = await auth();
-  if (!session || session.user.role === "VIEWER") {
-    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+  try {
+    const session = await auth();
+    if (!session || session.user.role === "VIEWER") {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+
+    const body = await request.json();
+    const parsed = productSchema.safeParse(body);
+    if (!parsed.success) {
+      return NextResponse.json({
+        error: "Validation failed",
+        details: parsed.error.flatten().fieldErrors
+      }, { status: 400 });
+    }
+
+    const { brandId, ...data } = parsed.data;
+    const slug = slugify(data.name);
+
+    // Check if slug already exists to provide a better error
+    const existing = await prisma.product.findUnique({ where: { slug } });
+    if (existing) {
+      return NextResponse.json({
+        error: `A product with the name "${data.name}" already exists.`
+      }, { status: 400 });
+    }
+
+    const product = await prisma.product.create({
+      data: {
+        ...data,
+        slug,
+        brandId,
+      },
+      include: { brand: { include: { category: true } } },
+    });
+
+    return NextResponse.json(product, { status: 201 });
+  } catch (err: any) {
+    console.error("Product creation error:", err);
+    return NextResponse.json({
+      error: err.message || "An unexpected error occurred while saving the product."
+    }, { status: 500 });
   }
-
-  const body = await request.json();
-  const parsed = productSchema.safeParse(body);
-  if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
-  }
-
-  const { brandId, ...data } = parsed.data;
-  const slug = slugify(data.name);
-
-  const product = await prisma.product.create({
-    data: {
-      ...data,
-      slug,
-      brandId,
-    },
-    include: { brand: { include: { category: true } } },
-  });
-
-  return NextResponse.json(product, { status: 201 });
 }
+

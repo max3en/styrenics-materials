@@ -65,10 +65,11 @@ export function ProductForm({ product, brands }: ProductFormProps) {
     const formData = new FormData(e.currentTarget);
     const data: any = {
       name: formData.get("name"),
-      brandId: formData.get("brandId"),
+      brandId: brandId, // Use state instead of formData for Select component
       type: formData.get("type") || null,
       mainApplications: formData.get("mainApplications") || null,
     };
+
 
     // Add numeric properties
     for (const key of propertyKeys) {
@@ -94,8 +95,9 @@ export function ProductForm({ product, brands }: ProductFormProps) {
 
       if (!res.ok) {
         const err = await res.json();
-        throw new Error(err.error?.message || "Failed to save product");
+        throw new Error(err.error || "Failed to save product");
       }
+
 
       const savedProduct = await res.json();
 
