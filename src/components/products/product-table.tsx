@@ -36,18 +36,54 @@ import {
   applicationsColumn,
   ProductRow,
 } from "./product-columns";
-import { ChevronLeft, ChevronRight, Search, SlidersHorizontal, Package, ArrowUpDown } from "lucide-react";
+import { ChevronLeft, ChevronRight, Search, SlidersHorizontal, Package, ArrowUpDown, Trash2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface ProductTableProps {
   products: ProductRow[];
   categories: { name: string; slug: string }[];
+  canEdit: boolean;
 }
 
-export function ProductTable({ products, categories }: ProductTableProps) {
+export function ProductTable({ products, categories, canEdit }: ProductTableProps) {
+  const router = useRouter();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
   const [categoryFilter, setCategoryFilter] = useState<string>("all");
+  const [deletingId, setDeletingId] = useState<string | null>(null);
+  const [deletingName, setDeletingName] = useState<string>("");
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const handleDelete = async () => {
+    if (!deletingId) return;
+    setIsDeleting(true);
+    try {
+      const res = await fetch(`/api/products/${deletingId}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed to delete product");
+
+      toast.success(`${deletingName} deleted successfully`);
+      router.refresh();
+    } catch (err) {
+      toast.error("Error deleting product");
+    } finally {
+      setIsDeleting(false);
+      setDeletingId(null);
+    }
+  };
 
   const filteredProducts = useMemo(() => {
     if (categoryFilter === "all") return products;
@@ -67,8 +103,21 @@ export function ProductTable({ products, categories }: ProductTableProps) {
     }
 
     cols.push(applicationsColumn);
+
+    if (canEdit) {
+      cols.push(
+        require("./product-columns").createActionsColumn(
+          (id: string, name: string) => {
+            setDeletingId(id);
+            setDeletingName(name);
+          },
+          canEdit
+        )
+      );
+    }
+
     return cols;
-  }, [categoryFilter]);
+  }, [categoryFilter, canEdit]);
 
   const table = useReactTable({
     data: filteredProducts,
@@ -210,6 +259,38 @@ export function ProductTable({ products, categories }: ProductTableProps) {
           </div>
         </div>
       </Card>
+
+      <AlertDialog open={!!deletingId} onOpenChange={(open) => !open && setDeletingId(null)}>
+        <AlertDialogContent className="rounded-2xl border-white/10 bg-background/95 backdrop-blur-xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete <strong>{deletingName}</strong> and all associated documents.
+              This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              onClick={(e) => {
+                e.preventDefault();
+                handleDelete();
+              }}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90 rounded-xl"
+              disabled={isDeleting}
+            >
+              {isDeleting ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Deleting...
+                </>
+              ) : (
+                "Delete Grade"
+              )}
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }

@@ -68,6 +68,7 @@ export async function DELETE(
   }
 
   const { id } = await params;
+  console.log(`Deleting product: ${id}`);
   await prisma.product.delete({ where: { id } });
   return NextResponse.json({ success: true });
 }

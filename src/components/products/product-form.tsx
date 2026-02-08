@@ -15,7 +15,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CATEGORY_COLUMNS, PROPERTY_LABELS } from "@/lib/constants";
-import { Loader2, FileUp, Save, X, Plus } from "lucide-react";
+import { Loader2, FileUp, Save, X, Plus, Trash2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface Brand {
@@ -113,6 +113,25 @@ export function ProductForm({ product, brands }: ProductFormProps) {
       }
 
       router.push(`/products/${savedProduct.slug}`);
+      router.refresh();
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
+    }
+  }
+
+  async function onDelete() {
+    if (!product || !confirm(`Are you sure you want to delete ${product.name}?`)) return;
+
+    setLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/products/${product.id}`, {
+        method: "DELETE",
+      });
+      if (!res.ok) throw new Error("Failed to delete product");
+
+      router.push("/products");
       router.refresh();
     } catch (err: any) {
       setError(err.message);
@@ -260,11 +279,24 @@ export function ProductForm({ product, brands }: ProductFormProps) {
         <Button
           type="button"
           variant="outline"
-          className="rounded-2xl h-12 px-8 border-white/10 bg-white/5 hover:bg-white/10 transition-all"
+          className="rounded-2xl h-12 px-8 border-white/10 bg-white/5 hover:bg-white/10 transition-all font-medium"
           onClick={() => router.back()}
         >
           Cancel
         </Button>
+
+        {product && (
+          <Button
+            type="button"
+            variant="ghost"
+            className="ml-auto rounded-2xl h-12 px-6 text-destructive hover:text-destructive hover:bg-destructive/10 transition-all font-semibold"
+            onClick={onDelete}
+            disabled={loading}
+          >
+            <Trash2 className="mr-2 h-5 w-5" />
+            Delete Grade
+          </Button>
+        )}
       </div>
     </form>
   );

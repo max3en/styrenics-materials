@@ -56,7 +56,11 @@ export default async function ProductsPage() {
           </Button>
         )}
       </div>
-      <ProductTable products={productRows} categories={categoryOptions} />
+      <ProductTable
+        products={productRows}
+        categories={categoryOptions}
+        canEdit={canEdit}
+      />
     </div>
   );
 

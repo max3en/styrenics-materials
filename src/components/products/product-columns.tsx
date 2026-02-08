@@ -119,3 +119,28 @@ export const applicationsColumn: ColumnDef<ProductRow> = {
     );
   },
 };
+
+export function createActionsColumn(
+  onDelete: (id: string, name: string) => void,
+  canDelete: boolean
+): ColumnDef<ProductRow> {
+  return {
+    id: "actions",
+    cell: ({ row }) => (
+      <div className="flex justify-end">
+        <Button
+          variant="ghost"
+          size="sm"
+          disabled={!canDelete}
+          onClick={(e) => {
+            e.stopPropagation();
+            onDelete(row.original.id, row.original.name);
+          }}
+          className="text-destructive hover:text-destructive hover:bg-destructive/10 rounded-lg h-8 px-2"
+        >
+          Delete
+        </Button>
+      </div>
+    ),
+  };
+}
