@@ -35,6 +35,7 @@ import {
   createPropertyColumn,
   applicationsColumn,
   ProductRow,
+  createActionsColumn,
 } from "./product-columns";
 import { ChevronLeft, ChevronRight, Search, SlidersHorizontal, Package, ArrowUpDown, Trash2, Loader2 } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -106,7 +107,7 @@ export function ProductTable({ products, categories, canEdit }: ProductTableProp
 
     if (canEdit) {
       cols.push(
-        require("./product-columns").createActionsColumn(
+        createActionsColumn(
           (id: string, name: string) => {
             setDeletingId(id);
             setDeletingName(name);
@@ -260,7 +261,7 @@ export function ProductTable({ products, categories, canEdit }: ProductTableProp
         </div>
       </Card>
 
-      <AlertDialog open={!!deletingId} onOpenChange={(open) => !open && setDeletingId(null)}>
+      <AlertDialog open={!!deletingId} onOpenChange={(open: boolean) => !open && setDeletingId(null)}>
         <AlertDialogContent className="rounded-2xl border-white/10 bg-background/95 backdrop-blur-xl">
           <AlertDialogHeader>
             <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
@@ -272,7 +273,7 @@ export function ProductTable({ products, categories, canEdit }: ProductTableProp
           <AlertDialogFooter>
             <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
             <AlertDialogAction
-              onClick={(e) => {
+              onClick={(e: React.MouseEvent) => {
                 e.preventDefault();
                 handleDelete();
               }}
