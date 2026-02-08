@@ -20,11 +20,19 @@ import {
     FlaskConical,
     Activity,
     Trees,
-    Scale
+    Scale,
+    BrainCircuit,
+    Settings2,
+    Gem,
+    ArrowRightLeft,
+    Microscope,
+    Waves
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { GradeComparator } from "@/components/learning/grade-comparator";
 import { ProcessingGuide } from "@/components/learning/processing-guide";
+import { TroubleshootingGuide } from "@/components/learning/troubleshooting-guide";
+import { SubstitutionMatrix } from "@/components/learning/substitution-matrix";
 
 const FAMILIES = [
     {
@@ -105,40 +113,83 @@ export default async function LearningPage() {
     });
 
     return (
-        <div className="space-y-16 pb-24 text-foreground max-w-7xl mx-auto">
-            {/* Header Section */}
-            <section className="relative overflow-hidden pt-12">
-                <div className="absolute top-0 right-0 h-[500px] w-[500px] bg-primary/5 rounded-full blur-[120px] -mr-48 -mt-48 animate-pulse" />
-                <div className="relative z-10 space-y-4">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-[10px] font-black uppercase tracking-[0.2em] w-fit border border-primary/20">
-                        <Lightbulb className="h-3 w-3" />
-                        Technical Excellence & Sales Support
+        <div className="space-y-16 pb-24 text-foreground max-w-7xl mx-auto px-4">
+            {/* Hero: Emotional & Scientific */}
+            <section className="relative overflow-hidden pt-16 pb-8">
+                <div className="absolute top-0 right-0 h-[600px] w-[600px] bg-primary/10 rounded-full blur-[140px] -mr-48 -mt-48 animate-pulse" />
+                <div className="absolute bottom-0 left-0 h-[400px] w-[400px] bg-blue-500/5 rounded-full blur-[100px] -ml-48 -mb-48" />
+
+                <div className="relative z-10 space-y-6">
+                    <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-primary/10 text-primary text-[11px] font-black uppercase tracking-[0.2em] w-fit border border-primary/20 backdrop-blur-md">
+                        <BrainCircuit className="h-3.5 w-3.5" />
+                        Mastery Level: Technical Sales Expert
                     </div>
-                    <h1 className="text-7xl font-black tracking-tighter bg-gradient-to-br from-foreground via-foreground/90 to-foreground/40 bg-clip-text text-transparent italic">
-                        Styrenics <br /> Knowledge Hub
+                    <h1 className="text-8xl font-black tracking-tighter leading-[0.9] bg-gradient-to-br from-foreground via-foreground/90 to-foreground/40 bg-clip-text text-transparent italic">
+                        Science <br /> <span className="text-primary not-italic">of Materials.</span>
                     </h1>
-                    <p className="text-muted-foreground text-xl max-w-2xl leading-relaxed font-medium">
-                        Tiefgreifendes technologisches Verständnis für Profis. Beherrschen Sie die materialwissenschaftlichen Grundlagen und steigern Sie Ihren Beratungswert.
+                    <p className="text-muted-foreground text-2xl max-w-3xl leading-relaxed font-medium">
+                        Vom Monomer zum präzisen Bauteil. Beherrschen Sie die physikalischen Gesetze der Styrenics, um in jedem Verkaufsgespräch durch technische Souveränität zu glänzen.
                     </p>
                 </div>
             </section>
 
-            <Tabs defaultValue="overview" className="space-y-12">
-                <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-xl border-b border-white/5 pb-4 -mx-4 px-4 pt-2">
-                    <TabsList className="bg-white/5 h-14 p-1 rounded-2xl border border-white/10">
-                        <TabsTrigger value="overview" className="rounded-xl px-8 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary">Portfolio</TabsTrigger>
-                        <TabsTrigger value="chemistry" className="rounded-xl px-8 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary">Chemistry</TabsTrigger>
-                        <TabsTrigger value="comparator" className="rounded-xl px-8 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary">Comparator</TabsTrigger>
-                        <TabsTrigger value="processing" className="rounded-xl px-8 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary">Processing</TabsTrigger>
-                        <TabsTrigger value="sustainability" className="rounded-xl px-8 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary">Sustainability</TabsTrigger>
+            <Tabs defaultValue="mastery" className="space-y-12">
+                <div className="sticky top-0 z-40 bg-background/80 backdrop-blur-2xl border-b border-white/5 pb-6 -mx-4 px-4 pt-4">
+                    <TabsList className="bg-white/5 h-16 p-1.5 rounded-3xl border border-white/10 w-full lg:w-auto overflow-x-auto overflow-y-hidden shadow-2xl">
+                        <TabsTrigger value="mastery" className="rounded-2xl px-8 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary h-full">The Journey</TabsTrigger>
+                        <TabsTrigger value="foundations" className="rounded-2xl px-8 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary h-full">Foundations</TabsTrigger>
+                        <TabsTrigger value="expert" className="rounded-2xl px-8 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary h-full">Chemistry</TabsTrigger>
+                        <TabsTrigger value="comparator" className="rounded-2xl px-8 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary h-full">Comparison</TabsTrigger>
+                        <TabsTrigger value="troubleshooting" className="rounded-2xl px-8 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary h-full">Defects Guide</TabsTrigger>
+                        <TabsTrigger value="strategist" className="rounded-2xl px-8 font-black text-[10px] uppercase tracking-widest data-[state=active]:bg-primary h-full">Substitution</TabsTrigger>
                     </TabsList>
                 </div>
 
-                {/* Tab 1: Overview & Families */}
-                <TabsContent value="overview" className="space-y-12 outline-none animate-in fade-in slide-in-from-bottom-4 duration-500">
+                {/* Tab: Mastery Journey */}
+                <TabsContent value="mastery" className="space-y-16 outline-none animate-in fade-in duration-700">
+                    <div className="grid gap-8 md:grid-cols-3">
+                        {[
+                            { step: "01", title: "Grundlagen", desc: "Molekulargewicht, Schmelzfluss und Dichte verstehen.", icon: Microscope },
+                            { step: "02", title: "Analyse", desc: "Technische Datenblätter lesen und interpretieren.", icon: Target },
+                            { step: "03", title: "Problemlösung", desc: "Fehlerbilder im Spritzguss erkennen und beheben.", icon: Settings2 }
+                        ].map(item => (
+                            <div key={item.step} className="p-8 rounded-[2.5rem] bg-white/5 border border-white/10 relative group overflow-hidden">
+                                <div className="absolute -top-4 -right-4 text-8xl font-black opacity-5 group-hover:scale-110 transition-transform">{item.step}</div>
+                                <item.icon className="h-10 w-10 text-primary mb-6 group-hover:rotate-12 transition-transform" />
+                                <h3 className="text-xl font-black italic mb-2 uppercase tracking-tight">{item.title}</h3>
+                                <p className="text-sm text-muted-foreground font-medium">{item.desc}</p>
+                            </div>
+                        ))}
+                    </div>
+
+                    <Card className="border-none bg-gradient-to-br from-primary/30 via-white/5 to-transparent backdrop-blur-xl p-12 rounded-[3.5rem] border border-white/10 group">
+                        <div className="flex flex-col lg:flex-row gap-12 items-center">
+                            <div className="flex-1 space-y-6">
+                                <h3 className="text-5xl font-black tracking-tighter italic">Die Styrenics Matrix</h3>
+                                <p className="text-xl text-foreground font-medium leading-relaxed">
+                                    Polystyrol (GPPS/HIPS), SAN und ABS bilden ein Kontinuum von Eigenschaften. Wir erklären, warum ABS schlagzäh ist, SAN glasklar und HIPS die Brücke dazwischen bildet.
+                                </p>
+                                <div className="flex gap-4">
+                                    <Button className="rounded-2xl h-14 px-10 font-black uppercase text-xs" asChild>
+                                        <Link href="#expert">Zur Chemie &rarr;</Link>
+                                    </Button>
+                                </div>
+                            </div>
+                            <div className="relative">
+                                <div className="h-80 w-80 bg-primary/20 blur-[80px] rounded-full absolute" />
+                                <div className="relative flex h-64 w-64 items-center justify-center rounded-[3rem] bg-white/5 border border-white/10 shadow-2xl rotate-3 group-hover:rotate-0 transition-transform">
+                                    <Atom className="h-32 w-32 text-primary animate-pulse" />
+                                </div>
+                            </div>
+                        </div>
+                    </Card>
+                </TabsContent>
+
+                {/* Tab: foundations (Material Families) */}
+                <TabsContent value="foundations" className="space-y-12 outline-none animate-in fade-in duration-700">
                     <div className="grid gap-8 lg:grid-cols-2">
                         {FAMILIES.map(family => (
-                            <Card key={family.id} className="border-none bg-white/5 backdrop-blur-md overflow-hidden rounded-[2.5rem] border border-white/5 group">
+                            <Card key={family.id} className="border-none bg-white/5 backdrop-blur-md overflow-hidden rounded-[2.5rem] border border-white/5 group transition-all hover:bg-white/10">
                                 <CardContent className="p-10 space-y-8">
                                     <div className="flex items-start justify-between">
                                         <div className="space-y-1">
@@ -154,23 +205,23 @@ export default async function LearningPage() {
                                         {family.description}
                                     </p>
 
-                                    <div className="grid grid-cols-2 gap-4">
+                                    <div className="grid grid-cols-2 gap-6">
                                         {family.properties.map(prop => (
                                             <div key={prop.label} className="space-y-2">
                                                 <div className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-muted-foreground">
                                                     <span>{prop.label}</span>
                                                     <span className={family.textColor}>{prop.value}%</span>
                                                 </div>
-                                                <div className="h-1.5 w-full bg-white/5 rounded-full">
-                                                    <div className={cn("h-full rounded-full", family.color)} style={{ width: `${prop.value}%` }} />
+                                                <div className="h-2 w-full bg-white/5 rounded-full p-0.5 overflow-hidden">
+                                                    <div className={cn("h-full rounded-full transition-all duration-1000", family.color)} style={{ width: `${prop.value}%` }} />
                                                 </div>
                                             </div>
                                         ))}
                                     </div>
 
-                                    <div className="pt-4 flex flex-wrap gap-2">
-                                        {family.useCases.slice(0, 3).map(u => (
-                                            <Badge key={u} variant="secondary" className="bg-white/10 hover:bg-white/20 border-none px-4 py-1.5 rounded-full text-[10px] font-bold uppercase tracking-widest">{u}</Badge>
+                                    <div className="pt-6 flex flex-wrap gap-3">
+                                        {family.useCases.map(u => (
+                                            <Badge key={u} variant="secondary" className="bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">{u}</Badge>
                                         ))}
                                     </div>
                                 </CardContent>
@@ -179,168 +230,161 @@ export default async function LearningPage() {
                     </div>
                 </TabsContent>
 
-                {/* Tab 2: Chemistry & Tech */}
-                <TabsContent value="chemistry" className="space-y-12 outline-none animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div className="grid gap-8 lg:grid-cols-3">
-                        <Card className="lg:col-span-2 border-none bg-white/5 backdrop-blur-md rounded-[2.5rem] border border-white/5 p-10 space-y-8">
-                            <div className="space-y-4">
-                                <div className="h-12 w-12 rounded-2xl bg-primary/20 flex items-center justify-center">
-                                    <FlaskConical className="h-6 w-6 text-primary" />
+                {/* Tab: Expert Chemistry */}
+                <TabsContent value="expert" className="space-y-16 outline-none animate-in fade-in duration-700">
+                    <div className="grid gap-12 lg:grid-cols-3">
+                        <div className="lg:col-span-2 space-y-12">
+                            <Card className="border-none bg-white/5 rounded-[3rem] border border-white/10 p-12 space-y-10">
+                                <div className="flex items-center gap-6">
+                                    <div className="h-20 w-20 rounded-[1.5rem] bg-primary/20 flex items-center justify-center">
+                                        <Waves className="h-10 w-10 text-primary" />
+                                    </div>
+                                    <div>
+                                        <h3 className="text-4xl font-black italic tracking-tighter">Morphologie & Gefüge</h3>
+                                        <p className="text-lg text-muted-foreground font-medium tracking-tight">Was im Inneren passiert.</p>
+                                    </div>
                                 </div>
-                                <h3 className="text-4xl font-black italic tracking-tight">The Core Chemistry</h3>
-                                <p className="text-lg text-muted-foreground leading-relaxed">
-                                    Alle Versalis Styrolpolymere basieren auf der Polymerisation von Styrolmonomeren. Jedoch definieren Additive und Copolymerisation die finalen Eigenschaften.
-                                </p>
-                            </div>
 
-                            <div className="grid gap-6 sm:grid-cols-2">
-                                <div className="p-6 rounded-3xl bg-white/5 border border-white/5 space-y-4">
-                                    <h4 className="text-lg font-bold text-primary">Masse-Verfahren</h4>
-                                    <p className="text-sm text-muted-foreground leading-relaxed italic">
-                                        Extrem rein, farbneutral und kosteneffizient. Eingesetzt bei Edistir® (GPPS/HIPS) und bestimmten Kostil® (SAN) Typen.
-                                    </p>
+                                <div className="grid gap-8 sm:grid-cols-2">
+                                    <div className="space-y-4 p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 transition-all hover:border-primary/20">
+                                        <h4 className="text-xl font-bold text-primary italic">Phasenmodell</h4>
+                                        <p className="text-sm text-foreground/70 leading-relaxed">
+                                            In ABS existiert eine **kontinuierliche Phase** (SAN) und eine **disperse Phase** (Butadien-Kautschuk). Die Kautschuk-Teilchen binden durch Pfropfung an das SAN – das sorgt für die Zähigkeit bei Kälte.
+                                        </p>
+                                    </div>
+                                    <div className="space-y-4 p-8 rounded-[2rem] bg-white/[0.02] border border-white/5 transition-all hover:border-blue-500/20">
+                                        <h4 className="text-xl font-bold text-blue-500 italic">Copolymerisation</h4>
+                                        <p className="text-sm text-foreground/70 leading-relaxed">
+                                            SAN verbessert PS durch die Zugabe von **Acrylnitril**. Dies erhöht die chemische Beständigkeit gegen Fette und Treibstoffe sowie die thermische Belastbarkeit.
+                                        </p>
+                                    </div>
                                 </div>
-                                <div className="p-6 rounded-3xl bg-white/5 border border-white/5 space-y-4">
-                                    <h4 className="text-lg font-bold text-blue-500">Emulsions-Verfahren</h4>
-                                    <p className="text-sm text-muted-foreground leading-relaxed italic">
-                                        Ermöglicht höhere Kautschukgehalte für extreme Schlagzähigkeit. Typisch für hochwertige Sinkral® (ABS) Spezialgrade.
-                                    </p>
-                                </div>
-                            </div>
 
-                            <div className="space-y-4 pt-8">
-                                <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Parameter-Lexikon</h4>
-                                <div className="space-y-4">
-                                    {[
-                                        { name: "Vicat Softening Point", desc: "Temperatur, bei der das Material unter Last weich wird. Kritisch für Dimensionsstabilität in heißen Umgebungen." },
-                                        { name: "MFI (Melt Flow Index)", desc: "Maß für die Fließfähigkeit. Hoher MFI = Einfache Verarbeitung komplexer Teile; Niedriger MFI = Bessere mechanische Werte." },
-                                        { name: "Izod/Charpy Impact", desc: "Widerstand gegen plötzliche Bruchlast. ABS glänzt hier durch die Butadien-Komponente." }
-                                    ].map(item => (
-                                        <div key={item.name} className="flex gap-4 p-4 rounded-2xl hover:bg-white/5 transition-colors">
-                                            <Activity className="h-5 w-5 text-primary shrink-0" />
-                                            <div>
-                                                <p className="font-bold text-sm tracking-tight">{item.name}</p>
-                                                <p className="text-xs text-muted-foreground mt-1">{item.desc}</p>
+                                <div className="space-y-6 pt-8">
+                                    <h4 className="text-xs font-black uppercase tracking-[0.3em] text-muted-foreground">Analytik & Grenzwerte</h4>
+                                    <div className="space-y-4">
+                                        {[
+                                            { name: "Schergeschwindigkeit", desc: "Besonders kritisch für ABS. Zu hohe Scherung kann die Kautschukpartikel zerstören (Glanzverlust)." },
+                                            { name: "Orientierung / Eigenspannung", desc: "Molekülketten richten sich in Fließrichtung aus. Dies führt bei SAN oft zum optischen Verzug." },
+                                            { name: "Molekulargewicht (Mw)", desc: "Bestimmt die Schmelzefestigkeit. Hohe Mw für Extrusion, niedrigere für dünnwandigen Spritzguss." }
+                                        ].map(item => (
+                                            <div key={item.name} className="flex gap-6 p-6 rounded-3xl hover:bg-white/5 transition-colors border border-transparent hover:border-white/5">
+                                                <div className="h-12 w-12 rounded-2xl bg-white/5 flex items-center justify-center font-black text-primary italic shrink-0">?</div>
+                                                <div>
+                                                    <p className="font-bold text-lg tracking-tight mb-1">{item.name}</p>
+                                                    <p className="text-sm text-muted-foreground leading-relaxed">{item.desc}</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
-                        </Card>
+                            </Card>
+                        </div>
 
                         <div className="space-y-8">
-                            <Card className="border-none bg-blue-600 rounded-[2.5rem] p-10 text-white shadow-2xl shadow-blue-500/20">
-                                <Atom className="h-12 w-12 mb-6" />
-                                <h3 className="text-2xl font-black italic mb-4">Wussten Sie?</h3>
-                                <p className="text-blue-50 leading-relaxed font-medium">
-                                    ABS besteht aus drei Komponenten. Das **Butadien** bildet feine Gummipartikel in einer steifen **SAN-Matrix**. Diese Partikel stoppen Risswachstum – das Geheimnis der Schlagzähigkeit.
+                            <Card className="border-none bg-primary rounded-[3rem] p-12 text-primary-foreground shadow-2xl shadow-primary/30 relative overflow-hidden group">
+                                <Zap className="absolute top-0 right-0 h-40 w-40 -mr-20 -mt-20 opacity-10 group-hover:scale-125 transition-transform duration-700" />
+                                <Gem className="h-16 w-16 mb-8" />
+                                <h3 className="text-3xl font-black italic mb-6">Expert Knowledge</h3>
+                                <p className="text-primary-foreground/90 text-lg leading-relaxed font-bold">
+                                    "Wussten Sie, dass der **Glanzgrad** bei ABS maßgeblich von der Größe der Gummipartikel abhängt? Kleinere Partikel sorgen für Hochglanz, größere für matte Oberflächen."
                                 </p>
                             </Card>
-                            <div className="p-8 rounded-[2rem] bg-white/5 border border-white/10 space-y-4">
-                                <h4 className="text-[10px] font-black uppercase tracking-widest text-primary">Technical Link</h4>
-                                <p className="text-[11px] text-muted-foreground">Laden Sie die vollen technischen Datenblätter im Regulatory Hub herunter.</p>
-                                <Button variant="outline" className="w-full rounded-xl text-xs font-bold" asChild>
-                                    <Link href="/regulatory">Direct to Hub</Link>
+                            <div className="p-10 rounded-[3rem] bg-white/5 border border-white/10 space-y-6 text-center">
+                                <div className="inline-flex h-16 w-16 items-center justify-center rounded-2xl bg-primary/10 mb-4">
+                                    <Thermometer className="h-8 w-8 text-primary" />
+                                </div>
+                                <h4 className="text-xl font-black italic uppercase tracking-tighter">Thermal Stability</h4>
+                                <p className="text-sm text-muted-foreground leading-relaxed">
+                                    Lernen Sie die Vicat-Profile im Comparator kennen, um die ideale Einsatztemperatur für Ihre Kundenanwendung zu finden.
+                                </p>
+                                <Button variant="outline" className="w-full rounded-2xl h-14 font-black uppercase tracking-widest text-[10px]" asChild>
+                                    <Link href="#comparator">Materialien Vergleichen</Link>
                                 </Button>
                             </div>
                         </div>
                     </div>
                 </TabsContent>
 
-                {/* Tab 3: Comparator */}
-                <TabsContent value="comparator" className="outline-none animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div className="space-y-8">
-                        <div className="max-w-3xl space-y-4">
-                            <h2 className="text-4xl font-black italic tracking-tight flex items-center gap-3">
-                                <Scale className="h-8 w-8 text-primary" />
-                                Interactive Grade Comparator
+                {/* Tab: Comparator */}
+                <TabsContent value="comparator" className="outline-none animate-in fade-in duration-700">
+                    <div className="space-y-12">
+                        <div className="max-w-4xl space-y-6">
+                            <h2 className="text-6xl font-black italic tracking-tighter flex items-center gap-4">
+                                <Scale className="h-12 w-12 text-primary" />
+                                Interactive Comparator
                             </h2>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
-                                Wählen Sie bis zu drei Materialien aus der Datenbank aus, um ihre physikalischen Eigenschaften detailliert gegenüberzustellen.
+                            <p className="text-2xl text-muted-foreground leading-relaxed font-medium">
+                                Wählen Sie bis zu drei Materialien aus der Live-Datenbank aus, um ihre physikalischen Eigenschaften detailliert gegenüberzustellen.
                             </p>
                         </div>
                         <GradeComparator products={products as any} />
                     </div>
                 </TabsContent>
 
-                {/* Tab 4: Processing */}
-                <TabsContent value="processing" className="outline-none animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div className="space-y-8">
-                        <div className="max-w-3xl space-y-4">
-                            <h2 className="text-4xl font-black italic tracking-tight flex items-center gap-3">
-                                <Activity className="h-8 w-8 text-orange-500" />
-                                Processing & Manufacturing
+                {/* Tab: Troubleshooting Guide */}
+                <TabsContent value="troubleshooting" className="outline-none animate-in fade-in duration-700">
+                    <div className="space-y-12">
+                        <div className="max-w-4xl space-y-6">
+                            <h2 className="text-6xl font-black italic tracking-tighter flex items-center gap-4 text-orange-500">
+                                <Activity className="h-12 w-12" />
+                                Troubleshooting
                             </h2>
-                            <p className="text-lg text-muted-foreground leading-relaxed">
-                                Optimale Druckergebnisse und Spritzgusszyklen hängen von der exakten Einhaltung der thermischen Parameter ab.
+                            <p className="text-2xl text-muted-foreground leading-relaxed font-medium">
+                                Analysieren und beheben Sie typische Verarbeitungsfehler im Spritzguss-Prozess mit wissenschaftlichen Methoden.
                             </p>
                         </div>
-                        <ProcessingGuide />
+                        <TroubleshootingGuide />
                     </div>
                 </TabsContent>
 
-                {/* Tab 5: Sustainability */}
-                <TabsContent value="sustainability" className="outline-none animate-in fade-in slide-in-from-bottom-4 duration-500">
-                    <div className="grid gap-12 lg:grid-cols-2">
-                        <div className="space-y-8">
-                            <div className="space-y-4">
-                                <div className="h-16 w-16 rounded-[2rem] bg-emerald-500/20 flex items-center justify-center">
-                                    <Trees className="h-8 w-8 text-emerald-500" />
-                                </div>
-                                <h2 className="text-5xl font-black italic tracking-tight text-emerald-500">Versalis Revive®</h2>
-                                <p className="text-xl text-foreground font-bold tracking-tight">Kompaktlösungen für die Kreislaufwirtschaft.</p>
-                            </div>
-
-                            <p className="text-lg text-muted-foreground leading-relaxed font-medium">
-                                Die Revive® Produktlinie kombiniert Post-Consumer-Abfälle (PCR) mit Frischware, ohne Kompromisse bei den mechanischen Eigenschaften einzugehen.
+                {/* Tab: Strategist (Substitution Matrix) */}
+                <TabsContent value="strategist" className="outline-none animate-in fade-in duration-700">
+                    <div className="space-y-12">
+                        <div className="max-w-4xl space-y-6">
+                            <h2 className="text-6xl font-black italic tracking-tighter flex items-center gap-4 text-emerald-500">
+                                <ArrowRightLeft className="h-12 w-12" />
+                                Market Strategist
+                            </h2>
+                            <p className="text-2xl text-muted-foreground leading-relaxed font-medium">
+                                Wann macht welcher Werkstoff Sinn? Unsere Substitutions-Matrix hilft bei der strategischen Entscheidung zwischen Kosten und Performance.
                             </p>
-
-                            <div className="space-y-4">
-                                {[
-                                    { title: "Revive® EPS", body: "Enthält bis zu 35% recyceltes Material. Perfekt für Dämmstoffe mit reduziertem CO2-Fußabdruck." },
-                                    { title: "Revive® PS", body: "Entwickelt für High-End-Anwendungen in der Logistik- und Verpackungsindustrie." },
-                                    { title: "Circular Economy", body: "Versalis investiert massiv in mechanisches und chemisches Recycling (Hoop® Projekt)." }
-                                ].map(item => (
-                                    <div key={item.title} className="p-6 rounded-[2rem] bg-white/5 border border-white/10 hover:border-emerald-500/30 transition-colors">
-                                        <h5 className="font-black text-emerald-500 uppercase tracking-widest text-[10px] mb-2">{item.title}</h5>
-                                        <p className="text-sm font-medium leading-relaxed">{item.body}</p>
-                                    </div>
-                                ))}
-                            </div>
                         </div>
-
-                        <div className="relative group">
-                            <div className="absolute inset-0 bg-emerald-500/10 blur-[150px] rounded-full group-hover:bg-emerald-500/20 transition-all" />
-                            <Card className="relative border-none bg-slate-900/50 backdrop-blur-3xl p-10 rounded-[3rem] border border-white/5 space-y-10">
-                                <div className="space-y-4">
-                                    <h4 className="text-2xl font-black italic">Der Weg zur Klimaneutralität</h4>
-                                    <div className="h-1 w-20 bg-emerald-500" />
-                                </div>
-
-                                <div className="space-y-6">
-                                    <div className="flex gap-6 items-start">
-                                        <div className="h-10 w-10 p-2 rounded-full border-2 border-emerald-500 flex items-center justify-center font-black text-emerald-500 shrink-0">1</div>
-                                        <p className="text-sm text-muted-foreground leading-relaxed italic">Phasing out fossil-only feedstock through bio-attributed monomers.</p>
-                                    </div>
-                                    <div className="flex gap-6 items-start">
-                                        <div className="h-10 w-10 p-2 rounded-full border-2 border-emerald-500 flex items-center justify-center font-black text-emerald-500 shrink-0">2</div>
-                                        <p className="text-sm text-muted-foreground leading-relaxed italic">Revolutionary mechanical recycling for highest purity standards.</p>
-                                    </div>
-                                    <div className="flex gap-6 items-start">
-                                        <div className="h-10 w-10 p-2 rounded-full border-2 border-emerald-500 flex items-center justify-center font-black text-emerald-500 shrink-0">3</div>
-                                        <p className="text-sm text-muted-foreground leading-relaxed italic">Design for recycling approach for all new products.</p>
-                                    </div>
-                                </div>
-
-                                <div className="pt-10 flex flex-col gap-3">
-                                    <Button className="rounded-2xl h-14 font-black uppercase tracking-widest text-xs bg-emerald-600 hover:bg-emerald-500">Download CSR Report</Button>
-                                    <Button variant="ghost" className="rounded-2xl h-14 font-black uppercase tracking-widest text-xs text-muted-foreground">Certified ISO 14001</Button>
-                                </div>
-                            </Card>
-                        </div>
+                        <SubstitutionMatrix />
                     </div>
                 </TabsContent>
             </Tabs>
+
+            {/* Footer / CTA Section */}
+            <section className="pt-12 pb-24">
+                <Card className="border-none shadow-3xl bg-gradient-to-br from-primary/20 via-white/5 to-transparent backdrop-blur-3xl overflow-hidden border border-white/10 group rounded-[4rem]">
+                    <CardContent className="p-16 flex flex-col lg:flex-row items-center justify-between gap-16">
+                        <div className="space-y-8 flex-1">
+                            <h3 className="text-6xl font-black tracking-tighter italic leading-none">Bereit für den <br /> <span className="text-primary not-italic">echten Vergleich?</span></h3>
+                            <p className="text-muted-foreground text-xl max-w-xl leading-relaxed font-medium">
+                                Haben Sie die Chemie und die Prozesse verstanden? Jetzt ist es Zeit, die exakten TDS aller Grades direkt gegenüberzustellen.
+                            </p>
+                            <div className="flex flex-wrap gap-4">
+                                <Button className="rounded-2xl h-16 px-12 font-black uppercase tracking-widest text-xs shadow-2xl shadow-primary/20 hover:scale-[1.05] active:scale-[0.95] transition-all" asChild>
+                                    <Link href="/products">
+                                        <Search className="mr-3 h-6 w-6" />
+                                        Produkt-Explorer
+                                    </Link>
+                                </Button>
+                                <Button variant="outline" className="rounded-2xl h-16 px-12 font-black uppercase tracking-widest text-xs border-white/10 bg-white/5 hover:bg-white/10 transition-all" asChild>
+                                    <Link href="/regulatory">TDS Download</Link>
+                                </Button>
+                            </div>
+                        </div>
+                        <div className="relative">
+                            <div className="absolute inset-0 bg-primary/40 blur-[130px] rounded-full animate-pulse" />
+                            <div className="relative flex h-72 w-72 items-center justify-center rounded-[3.5rem] bg-white/5 border border-white/20 backdrop-blur-3xl rotate-[20deg] group-hover:rotate-0 transition-all duration-1000 shadow-2xl">
+                                <Layers className="h-32 w-32 text-primary animate-bounce-slow" />
+                            </div>
+                        </div>
+                    </CardContent>
+                </Card>
+            </section>
         </div>
     );
 }
